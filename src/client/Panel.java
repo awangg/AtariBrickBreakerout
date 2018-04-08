@@ -12,8 +12,6 @@ import java.util.ArrayList;
 
 public class Panel extends JPanel {
 
-    // yeet
-
     // 1 - game     2 - dead     3 - win     5 - start     6 - instructions
     private int state = 5;
     private boolean begin = false, pause = false;
