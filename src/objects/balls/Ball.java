@@ -31,15 +31,27 @@ public class Ball {
         y += vy;
 
         if(x - vx < 0) {
-            vx *= -1.05;
+            if(Math.abs(vx) <= 15) {
+                vx *= -1.05;
+            }else {
+                vx *= -1;
+            }
             x = vx;
         }else if(x + r/2 + vx > Main.WIDTH) {
-            vx *= -1.05;
+            if(Math.abs(vx) <= 15) {
+                vx *= -1.05;
+            }else {
+                vx *= -1;
+            }
             x = Main.WIDTH - vx - r/2 - 1;
         }
 
         if(y - vy < 0) {
-            vy *= -1.05;
+            if(Math.abs(vy) <= 15) {
+                vy *= -1.05;
+            }else {
+                vy *= -1;
+            }
             y = vy;
         }else if(y + r/2 + vy > Main.HEIGHT - Main.NAMEBAR) {
             vx = 0;
@@ -47,6 +59,7 @@ public class Ball {
             y = Main.HEIGHT - Main.NAMEBAR - r/2 - vy;
             hitBottom = true;
         }
+        setPoints();
     }
 
     public void setPoints() {
@@ -64,30 +77,47 @@ public class Ball {
     }
 
     public boolean collide(Rectangle rect) {
-        setPoints();
+        boolean collided = false;
         for(Point p : points) {
             if(rect.contains(p)) {
                 if(y + r/2 > (int)(rect.getY() + rect.getHeight())) {
-                    if(vy < 0) vy *= -1.05;
-                    y = (int)rect.getY() + (int)rect.getHeight() + r/2;
-                    return true;
+                    if(vy < 0 && Math.abs(vy) <= 15) {
+                        vy *= -1.05;
+                    }else if(vy < 0) {
+                        vy *= -1;
+                    }
+                    y = rect.getY() + rect.getHeight() + r/2;
+                    collided = true;
                 }else if(y - r/2 < rect.getY()) {
-                    if(vy > 0) vy *= -1.05;
-                    y = (int)rect.getY() - r/2;
-                    return true;
+                    if(vy > 0 && Math.abs(vy) <= 15) {
+                        vy *= -1.05;
+                    }else if(vy > 0){
+                        vy *= -1;
+                    }
+                    y = rect.getY() - r/2;
+                    collided = true;
                 }
+
                 if(x + r/2 > rect.getX() + rect.getWidth()) {
-                    if(vx < 0) vx *= -1.05;
-                    x = (int)rect.getX() + (int)rect.getWidth() + r/2;
-                    return true;
+                    if(vx < 0 && Math.abs(vx) <= 15) {
+                        vx *= -1.05;
+                    }else if(vx < 0) {
+                        vx *= -1;
+                    }
+                    x = rect.getX() + rect.getWidth() + r/2;
+                    collided = true;
                 }else if(x - r/2 < rect.getX()) {
-                    if(vx > 0) vx *= -1.05;
-                    x = (int)rect.getX() - r/2;
-                    return true;
+                    if(vx > 0 && Math.abs(vx) <= 15) {
+                        vx *= -1.05;
+                    }else if(vx > 0) {
+                        vx *= -1;
+                    }
+                    x = rect.getX() - r/2;
+                    collided = true;
                 }
             }
         }
-        return false;
+        return collided;
     }
 
     public void display(Graphics2D g2) {

@@ -52,6 +52,11 @@ public class Paddle {
         return new Rectangle(x, y, w, h);
     }
 
+    public void setPosition(Point p) {
+        x = p.x;
+        y = p.y;
+    }
+
     public void setSpeed(int newSpeed) {
         speed = newSpeed;
     }

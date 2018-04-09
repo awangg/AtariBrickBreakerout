@@ -15,6 +15,7 @@ public class Panel extends JPanel {
     // 1 - game     2 - dead     3 - win     5 - start     6 - instructions
     private int state = 5;
     private boolean begin = false, pause = false;
+    private boolean keyboard = true, mouse = false;
     private boolean admin = false;
 
     private Timer mainTimer;
@@ -38,7 +39,7 @@ public class Panel extends JPanel {
     public static int points;
     private int lives;
 
-    private JButton play, instructions, skip, back;
+    private JButton play, instructions, skip, back, chooseKeys, chooseMouse;
     private int buttonWidth = 100, buttonHeight = 50;
 
     private int[] gameOverOpacity = new int[]{0, 0, 0, 0, 0, 0, 0, 0}, victoryOpacity = new int[]{0, 0, 0, 0, 0, 0, 0};
@@ -54,7 +55,7 @@ public class Panel extends JPanel {
                 if(state == 1) {
                     currentTime = System.currentTimeMillis();
 
-                    playerControls();
+                    if(keyboard) playerControls();
                     if(!pause && begin) ballControls();
                     effectTimer();
                     powerupControls();
@@ -164,6 +165,8 @@ public class Panel extends JPanel {
                     Ball b = balls.get(0);
                     b.setPosition(new Point(e.getX(), e.getY()));
                 }
+
+                if(mouse && state == 1) player.setPosition(new Point(e.getX() - player.getWidth()/2, player.getPosition().y));
             }
         });
     }
@@ -173,6 +176,8 @@ public class Panel extends JPanel {
         instructions = new JButton("How to Play");
         skip = new JButton("Skip Intro");
         back = new JButton("Home");
+        chooseKeys = new JButton("Keyboard");
+        chooseMouse = new JButton("Mouse");
 
         play.addActionListener(new ActionListener() {
             @Override
@@ -205,24 +210,55 @@ public class Panel extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 remove(back);
+                remove(chooseKeys);
+                remove(chooseMouse);
                 gameOverOpacity = new int[]{0,0,0,0,0,0,0,0};
                 victoryOpacity = new int[]{0,0,0,0,0,0,0,0};
                 state = 5;
             }
         });
+
+        chooseKeys.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                remove(chooseKeys);
+                add(chooseMouse);
+                keyboard = false;
+                mouse = true;
+            }
+        });
+
+        chooseMouse.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                remove(chooseMouse);
+                add(chooseKeys);
+                mouse = false;
+                keyboard = true;
+            }
+        });
+
+        play.setBounds(Main.WIDTH/2 - buttonWidth/2, Main.HEIGHT/2 - 20, buttonWidth, buttonHeight);
+        instructions.setBounds(Main.WIDTH/2 - buttonWidth/2, Main.HEIGHT/2 + 40, buttonWidth, buttonHeight);
+        back.setBounds(Main.WIDTH - buttonWidth - 10, Main.HEIGHT - buttonHeight - 30, buttonWidth, buttonHeight);
+        chooseMouse.setBounds(10, Main.HEIGHT - buttonHeight - 30, buttonWidth, buttonHeight);
+        chooseKeys.setBounds(10, Main.HEIGHT - buttonHeight - 30, buttonWidth, buttonHeight);
     }
 
     public void addButtons() {
         if(state == 5) {
-            play.setBounds(Main.WIDTH/2 - buttonWidth/2, Main.HEIGHT/2 - 20, buttonWidth, buttonHeight);
-            instructions.setBounds(Main.WIDTH/2 - buttonWidth/2, Main.HEIGHT/2 + 40, buttonWidth, buttonHeight);
-
             add(play);
             add(instructions);
         }else if(state <= 3 || state == 6) {
-            back.setBounds(Main.WIDTH - buttonWidth - 10, Main.HEIGHT - buttonHeight - 30, buttonWidth, buttonHeight);
-
             add(back);
+
+            if(state == 6) {
+                if(keyboard) {
+                    add(chooseKeys);
+                }else {
+                    add(chooseMouse);
+                }
+            }
         }
     }
 
@@ -534,8 +570,13 @@ public class Panel extends JPanel {
             // Controls
             g2.setColor(Color.WHITE);
             g2.setFont(new Font("SansSerif", Font.BOLD, 16));
-            String name = "Controls:    A-Move Left    |    D-Move Right";
-            g2.drawString(name, Main.WIDTH/2 - g2.getFontMetrics().stringWidth(name)/2, 30);
+            String cont;
+            if(keyboard) {
+                cont = "Controls:    A-Move Left    |    D-Move Right";
+            }else {
+                cont = "Controls:    Move Mouse";
+            }
+            g2.drawString(cont, Main.WIDTH/2 - g2.getFontMetrics().stringWidth(cont)/2, 30);
 
             // Powerups
             String power = "Powerups:";
