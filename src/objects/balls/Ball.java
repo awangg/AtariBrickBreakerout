@@ -80,7 +80,7 @@ public class Ball {
         boolean collided = false;
         for(Point p : points) {
             if(rect.contains(p)) {
-                if(y + r/2 > (int)(rect.getY() + rect.getHeight())) {
+                if(y> (int)(rect.getY() + rect.getHeight())) {
                     if(vy < 0 && Math.abs(vy) <= 15) {
                         vy *= -1.05;
                     }else if(vy < 0) {
@@ -88,7 +88,7 @@ public class Ball {
                     }
                     y = rect.getY() + rect.getHeight() + r/2;
                     collided = true;
-                }else if(y - r/2 < rect.getY()) {
+                }else if(y < rect.getY()) {
                     if(vy > 0 && Math.abs(vy) <= 15) {
                         vy *= -1.05;
                     }else if(vy > 0){
@@ -98,7 +98,7 @@ public class Ball {
                     collided = true;
                 }
 
-                if(x + r/2 > rect.getX() + rect.getWidth()) {
+                if(x > rect.getX() + rect.getWidth()) {
                     if(vx < 0 && Math.abs(vx) <= 15) {
                         vx *= -1.05;
                     }else if(vx < 0) {
@@ -106,7 +106,7 @@ public class Ball {
                     }
                     x = rect.getX() + rect.getWidth() + r/2;
                     collided = true;
-                }else if(x - r/2 < rect.getX()) {
+                }else if(x < rect.getX()) {
                     if(vx > 0 && Math.abs(vx) <= 15) {
                         vx *= -1.05;
                     }else if(vx > 0) {

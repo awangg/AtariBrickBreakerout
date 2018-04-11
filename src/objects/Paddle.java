@@ -1,7 +1,7 @@
 package objects;
 
-import java.awt.*;
 import client.*;
+import java.awt.*;
 
 public class Paddle {
 

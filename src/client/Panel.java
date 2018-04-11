@@ -269,7 +269,7 @@ public class Panel extends JPanel {
         balls = new ArrayList<>();
         effects = new ArrayList<>();
         powerups = new ArrayList<>();
-        lives = 5;
+        lives = 3;
 
         if(level == 1) {
             points = 0;
