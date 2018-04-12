@@ -19,7 +19,7 @@ public class Magic extends Block {
         int w = getWidth();
         int h = getHeight();
 
-        Powerup[] powerups = new Powerup[] {new ExplodeTransform(x + w/2, y + h/2, 20, 20), new MoreBalls(x + w/2, y + h/2, 20, 20), new PointBooster(x + w/2, y + h/2, 20, 20), new SpeedPaddle(x + w/2, y + h/2, 20, 20)};
+        Powerup[] powerups = new Powerup[] {new ExplodeTransform(x + w/2, y + h/2, 20, 20), new MoreBalls(x + w/2, y + h/2, 20, 20), new PointBooster(x + w/2, y + h/2, 20, 20), new LifeUp(x + w/2, y + h/2, 20, 20)};
         drop = powerups[(int)(Math.random() * powerups.length)];
     }
 

@@ -8,11 +8,11 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.awt.*;
 
-public class SpeedPaddle extends Powerup {
+public class LifeUp extends Powerup {
 
     private BufferedImage img;
 
-    public SpeedPaddle(int x, int y, int w, int h) {
+    public LifeUp(int x, int y, int w, int h) {
         super(x, y, w, h);
         try {
             img = ImageIO.read(Main.buildImageFile("speedpowerup.png"));
@@ -23,9 +23,7 @@ public class SpeedPaddle extends Powerup {
 
     @Override
     public void action() {
-        if(Panel.player.getSpeed() < 20) {
-            Panel.player.setSpeed((int) (Panel.player.getSpeed() * 1.5));
-        }
+        Panel.lives+=2;
     }
 
     @Override

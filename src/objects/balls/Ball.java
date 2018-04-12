@@ -8,7 +8,7 @@ public class Ball {
     private double x, y, r;
     private double vx, vy;
     private Color color;
-    private boolean hitBottom = false;
+    private boolean hitBottom = false, isFireball = false;
     private Point[] points;
 
     public Ball(int x, int y, int r) {
@@ -59,6 +59,7 @@ public class Ball {
             y = Main.HEIGHT - Main.NAMEBAR - r/2 - vy;
             hitBottom = true;
         }
+
         setPoints();
     }
 
@@ -79,8 +80,8 @@ public class Ball {
     public boolean collide(Rectangle rect) {
         boolean collided = false;
         for(Point p : points) {
-            if(rect.contains(p)) {
-                if(y> (int)(rect.getY() + rect.getHeight())) {
+            if(rect.contains(new Point((int)(p.x + vx), (int)(p.y + vy)))) {
+                if(y > (int)(rect.getY() + rect.getHeight())) {
                     if(vy < 0 && Math.abs(vy) <= 15) {
                         vy *= -1.05;
                     }else if(vy < 0) {
@@ -139,8 +140,24 @@ public class Ball {
         return hitBottom;
     }
 
+    public Point getVelocity() {
+        return new Point((int)vx, (int)vy);
+    }
+
+    public Point[] getPoints() {
+        return points;
+    }
+
+    public boolean isFireball() {
+        return isFireball;
+    }
+
     public void setPosition(Point pos) {
         x = pos.x;
         y = pos.y;
+    }
+
+    public void setFireball(boolean b) {
+        isFireball = b;
     }
 }

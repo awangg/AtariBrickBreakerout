@@ -1,7 +1,7 @@
 package client;
 
 import objects.*;
-import objects.balls.Ball;
+import objects.balls.*;
 import objects.tiles.*;
 import objects.powerups.*;
 import graphics.*;
@@ -27,17 +27,19 @@ public class Panel extends JPanel {
     private int level = 1, tileWidth = 75, tileHeight = 40;
 
     public static Paddle player;
-    private int playerWidth = 100, playerHeight = 15, ballRadius = 20;
+    private int playerWidth = 100, playerHeight = 15;
+    public static int ballRadius = 20;
 
     public static ArrayList<Ball> balls;
     private int[] ballNums = new int[]{1, 1, 2, 2, 3};
 
     public static ArrayList<Effect> effects;
     public static long currentTime;
+    private boolean spreadt;
 
     public static ArrayList<Powerup> powerups;
     public static int points;
-    private int lives;
+    public static int lives;
 
     private JButton play, instructions, skip, back, chooseKeys, chooseMouse;
     private int buttonWidth = 100, buttonHeight = 50;
@@ -80,7 +82,10 @@ public class Panel extends JPanel {
         fireSpread = new Timer(1000, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(state == 1) spreadFire();
+                if(state == 1) {
+                    spreadt = false;
+                    spreadFire();
+                }
             }
         });
         fireSpread.start();
@@ -200,7 +205,7 @@ public class Panel extends JPanel {
                 powerups.add(new ExplodeTransform(20, 80, 30, 30));
                 powerups.add(new MoreBalls(20, 130, 30, 30));
                 powerups.add(new PointBooster(20, 180, 30, 30));
-                powerups.add(new SpeedPaddle(20, 230, 30, 30));
+                powerups.add(new LifeUp(20, 230, 30, 30));
 
                 state = 6;
             }
@@ -358,7 +363,14 @@ public class Panel extends JPanel {
     public void resetBalls(int num) {
         begin = false;
         for(int i = 0; i < num; i++) {
-            balls.add(new Ball(Main.WIDTH / 2, Main.HEIGHT - 150, ballRadius));
+            double chance = Math.random();
+            if(chance <= .75) {
+                balls.add(new Ball(Main.WIDTH / 2, Main.HEIGHT - 150, ballRadius));
+            }else if(chance <= .90) {
+                balls.add(new Fireball(Main.WIDTH / 2, Main.HEIGHT - 150, ballRadius));
+            }else {
+                balls.add(new Thicc(Main.WIDTH / 2, Main.HEIGHT - 150, ballRadius * 5));
+            }
         }
     }
 
@@ -379,8 +391,14 @@ public class Panel extends JPanel {
                             effects.add(new Sparkle(bloc.getPosition().x + bloc.getWidth()/2, bloc.getPosition().y + bloc.getHeight()/2, (int)(tileWidth * 1.15), tileHeight * 2, currentTime));
                             powerups.add(mag.spawnPowerup());
                         }
-                        points += 20;
-                        board[r][c] = null;
+
+                        if(b.isFireball()) {
+                            bloc.setOnFire(true);
+                            effects.add(new Fire(bloc.getPosition().x + bloc.getWidth()/2, bloc.getPosition().y + bloc.getHeight()/2, tileWidth, tileHeight, currentTime));
+                        }else {
+                            points += 20;
+                            board[r][c] = null;
+                        }
                     }
                 }
             }
@@ -441,10 +459,11 @@ public class Panel extends JPanel {
                     int dx = deltaX[index];
                     int dy = deltaY[index][(int)(Math.random() * deltaY[index].length)];
 
-                    if(r + dy >= 0 && r + dy < board.length && c + dx >= 0 && c + dx < board[r].length && board[r+dy][c+dx] != null) {
+                    if(r + dy >= 0 && r + dy < board.length && c + dx >= 0 && c + dx < board[r].length && board[r+dy][c+dx] != null && !spreadt) {
                         Block b = board[r+dy][c+dx];
                         board[r+dy][c+dx].setOnFire(true);
                         effects.add(new Fire(b.getPosition().x + b.getWidth()/2, b.getPosition().y + b.getHeight()/2, b.getWidth(), b.getHeight(), currentTime));
+                        spreadt = true;
                     }
 
                     if(bloc.isExploding()) {
@@ -456,6 +475,8 @@ public class Panel extends JPanel {
                         effects.add(new Sparkle(bloc.getPosition().x + bloc.getWidth()/2, bloc.getPosition().y + bloc.getHeight()/2, (int)(tileWidth * 1.15), tileHeight * 2, currentTime));
                         powerups.add(mag.spawnPowerup());
                     }
+
+                    points += 20;
                     board[r][c] = null;
                 }
             }
@@ -587,7 +608,7 @@ public class Panel extends JPanel {
             g2.drawString("- transforms some regular blocks to explosive blocks", 55, 99);
             g2.drawString("- adds up to four balls", 55, 149);
             g2.drawString("- gives 150 points", 55, 199);
-            g2.drawString("- increases paddle movement speed", 55, 249);
+            g2.drawString("- grants two more lives", 55, 249);
 
             String magicDesc = "|?| blocks drop powerups";
             String explDesc = "|!!!| blocks explode";
