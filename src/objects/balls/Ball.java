@@ -125,6 +125,7 @@ public class Ball {
         g2.setColor(color);
         g2.fillOval((int)(x - r/2), (int)(y - r/2), (int)r, (int)r);
         g2.setColor(Color.RED);
+        g2.setStroke(new BasicStroke(2));
         g2.drawOval((int)(x - r/2), (int)(y - r/2), (int)r, (int)r);
     }
 

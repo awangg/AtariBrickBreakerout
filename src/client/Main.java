@@ -28,3 +28,19 @@ public class Main {
         return classLoader.getResource(file);
     }
 }
+
+/*
+TODO
+
+Images Cited
+
+Ball Powerup (ballpowerup.png): https://openclipart.org/image/2400px/svg_to_png/292096/rainbow_sphere.png
+Explosion (explode.png): https://images.clipartuse.com/d333c602bd834fa0e29a8b8a6f4e5c56_6-starburst-explosion-comic-vector-png-transparent-svg-_1024-850.png
+Explosion Powerup (explpowerup.png): http://jacksbox.de/wp-content/uploads/2013/03/box_yellow_em.png
+Fire (fire.png): http://clipart-library.com/image_gallery2/Fire-PNG.png
+Point Powerup (pointpowerup.png): https://www.shareicon.net/data/128x128/2016/10/11/842215_arrows_512x512.png
+Sparkle (sparkle.png): https://pngtree.com/freepng/decorative-white-sparkling-effect_187405.html
+Lives Powerup (speedpowerup.png): https://image.flaticon.com/icons/svg/248/248610.svg
+
+TODO
+*/
