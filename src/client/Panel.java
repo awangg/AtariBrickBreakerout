@@ -31,7 +31,7 @@ public class Panel extends JPanel {
     public static int ballRadius = 20;
 
     public static ArrayList<Ball> balls;
-    private int[] ballNums = new int[]{1, 1, 2, 2, 3};
+    private int[] ballNums = new int[]{1, 1, 1, 2, 2, 2, 3, 3, 4, 4};
 
     public static ArrayList<Effect> effects;
     public static long currentTime;
@@ -64,7 +64,7 @@ public class Panel extends JPanel {
 
                     if(checkEmpty() && level < 5) {
                         pause = true;
-                    }else if(checkEmpty() && level >= 5) {
+                    }else if(checkEmpty() && level >= 10) {
                         state = 3;
                     }
 
@@ -275,6 +275,8 @@ public class Panel extends JPanel {
         effects = new ArrayList<>();
         powerups = new ArrayList<>();
         lives = 3;
+        pause = false;
+        begin = false;
 
         if(level == 1) {
             points = 0;
@@ -336,25 +338,25 @@ public class Panel extends JPanel {
         }else if(level == 8) {
             setupLevel = new int[][] {
                     {1, 1, 1, 1, 1, 1, 1, 1},
-                    {1, 1, 1, 1, 1, 1, 1, 1},
-                    {1, 1, 1, 1, 1, 1, 1, 1},
+                    {1, 2, 1, 1, 1, 1, 2, 1},
+                    {1, 1, 1, 3, 1, 3, 1, 1},
                     {0, 0, 0, 1, 1, 0, 0, 0},
                     {0, 0, 0, 1, 1, 0, 0, 0}
             };
         }else if(level == 9) {
             setupLevel = new int[][] {
                     {1, 1, 1, 1, 1, 1, 1, 1},
-                    {1, 0, 1, 1, 1, 2, 0, 1},
-                    {1, 1, 3, 2, 2, 3, 3, 1},
-                    {1, 0, 2, 1, 1, 2, 0, 1},
-                    {1, 1, 1, 1, 1, 1, 1, 1}
+                    {1, 2, 1, 1, 1, 1, 2, 1},
+                    {1, 1, 1, 3, 1, 3, 1, 1},
+                    {0, 0, 0, 1, 1, 0, 0, 0},
+                    {0, 0, 0, 1, 1, 0, 0, 0}
             };
         }else if(level == 10) {
             setupLevel = new int[][] {
                     {1, 1, 1, 1, 1, 1, 1, 1},
-                    {1, 0, 2, 1, 1, 2, 0, 1},
-                    {1, 1, 3, 2, 2, 3, 3, 1},
-                    {1, 0, 2, 1, 1, 2, 0, 1},
+                    {2, 1, 2, 1, 2, 1, 2, 1},
+                    {1, 2, 1, 2, 1, 2, 1, 2},
+                    {2, 1, 2, 1, 2, 1, 2, 1},
                     {1, 1, 1, 1, 1, 1, 1, 1}
             };
         }
@@ -417,7 +419,7 @@ public class Panel extends JPanel {
     public void ballControls() {
         for(int i = 0; i < balls.size(); i++) {
             Ball b = balls.get(i);
-            if(!admin) b.move();
+            b.move();
             for(int r = 0; r < board.length; r++) {
                 for(int c = 0; c < board[r].length; c++) {
                     Block bloc = board[r][c];

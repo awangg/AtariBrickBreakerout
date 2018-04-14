@@ -43,7 +43,7 @@ public class Ball {
             }else {
                 vx *= -1;
             }
-            x = Main.WIDTH - vx - r/2 - 1;
+            x = Main.WIDTH - vx - r/2;
         }
 
         if(y - vy < 0) {
@@ -160,5 +160,13 @@ public class Ball {
 
     public void setFireball(boolean b) {
         isFireball = b;
+    }
+
+    public void setVx(double newvx) {
+        vx = newvx;
+    }
+
+    public void setVy(double newvy) {
+        vy = newvy;
     }
 }

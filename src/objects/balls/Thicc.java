@@ -11,6 +11,10 @@ public class Thicc extends Ball {
     public Thicc(int x, int y, int r) {
         super(x, y, r);
         killCount = 0;
+
+        if(getVelocity().y > 0) {
+            setVy(getVelocity().y * -1);
+        }
     }
 
     @Override

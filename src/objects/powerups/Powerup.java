@@ -21,7 +21,7 @@ public class Powerup {
     }
 
     public boolean isCollected(Paddle p) {
-        if(y + speed >= p.getPosition().y && y + speed <= p.getPosition().y + p.getHeight() && x + w >= p.getPosition().x && x <= p.getPosition().x + p.getWidth()) {
+        if(y + h + speed >= p.getPosition().y && y + h + speed <= p.getPosition().y + p.getHeight() && x + w >= p.getPosition().x && x <= p.getPosition().x + p.getWidth()) {
             return true;
         }
         return false;
