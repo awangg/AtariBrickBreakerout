@@ -13,6 +13,7 @@ public class Magic extends Block {
         determinePowerup();
     }
 
+    // Randomly determines the powerup
     public void determinePowerup() {
         int x = getPosition().x;
         int y = getPosition().y;

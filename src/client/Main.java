@@ -8,10 +8,11 @@ public class Main {
     public static final int WIDTH = 600, HEIGHT = 500, NAMEBAR = 22;
 
     public static void main(String[] args) {
-        JFrame frame = new JFrame("Breakout");
+        JFrame frame = new JFrame("Atari Brick Breaker-out");
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.setSize(WIDTH,HEIGHT);
 
+        // Initializes and sets up the game window
         p = new Panel();
         frame.add(p);
         p.setLayout(null);
@@ -23,6 +24,7 @@ public class Main {
         frame.setResizable(true);
     }
 
+    // Allows images to be accessible after .jar is built
     public static URL buildImageFile(String file){
         ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
         return classLoader.getResource(file);

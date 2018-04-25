@@ -35,6 +35,7 @@ public class Thicc extends Ball {
         setPoints();
     }
 
+    // Keeps track of destroyed blocks rather than changing direction of bounce
     @Override
     public boolean collide(Rectangle rect) {
         for(Point p : getPoints()) {

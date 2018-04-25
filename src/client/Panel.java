@@ -41,7 +41,7 @@ public class Panel extends JPanel {
     public static int points;
     public static int lives;
 
-    private JButton play, instructions, skip, back, chooseKeys, chooseMouse;
+    private JButton play, instructions, back, chooseKeys, chooseMouse;
     private int buttonWidth = 100, buttonHeight = 50;
 
     private int[] gameOverOpacity = new int[]{0, 0, 0, 0, 0, 0, 0, 0}, victoryOpacity = new int[]{0, 0, 0, 0, 0, 0, 0};
@@ -50,6 +50,7 @@ public class Panel extends JPanel {
     public Panel() {
         initButtons();
 
+        // Central timer; controls basic game functions
         mainTimer = new Timer(40, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -79,6 +80,7 @@ public class Panel extends JPanel {
         });
         mainTimer.start();
 
+        // Constantly spreads fire
         fireSpread = new Timer(1000, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -176,10 +178,10 @@ public class Panel extends JPanel {
         });
     }
 
+    // Creates all the buttons that will be used in the game
     public void initButtons() {
         play = new JButton("Start");
         instructions = new JButton("How to Play");
-        skip = new JButton("Skip Intro");
         back = new JButton("Home");
         chooseKeys = new JButton("Keyboard");
         chooseMouse = new JButton("Mouse");
@@ -250,6 +252,7 @@ public class Panel extends JPanel {
         chooseKeys.setBounds(10, Main.HEIGHT - buttonHeight - 30, buttonWidth, buttonHeight);
     }
 
+    // Adds buttons depending on which screen the player is on
     public void addButtons() {
         if(state == 5) {
             add(play);
@@ -267,6 +270,7 @@ public class Panel extends JPanel {
         }
     }
 
+    // Builds level from customizable integer 2D arrays; allows admin to easily design levels
     public void loadLevel(int level) {
         board = new Block[5][8];
         int[][] setupLevel = new int[5][8];
@@ -374,6 +378,7 @@ public class Panel extends JPanel {
         }
     }
 
+    // Checks if there are no more blocks
     public boolean checkEmpty() {
         for(int r = 0; r < board.length; r++) {
             for(int c = 0; c < board[r].length; c++) {
@@ -385,6 +390,7 @@ public class Panel extends JPanel {
         return true;
     }
 
+    // Handles player actions corresponding to inputs
     public void playerControls() {
         if(keys[KeyEvent.VK_A] || keys[KeyEvent.VK_LEFT]) {
             player.move("left");
@@ -402,6 +408,7 @@ public class Panel extends JPanel {
         }
     }
 
+    // Resets the number of balls based on an array containing a set number of balls corresponding to each level
     public void resetBalls(int num) {
         begin = false;
         for(int i = 0; i < num; i++) {
@@ -416,6 +423,7 @@ public class Panel extends JPanel {
         }
     }
 
+    // Handles ball movement and collision effects
     public void ballControls() {
         for(int i = 0; i < balls.size(); i++) {
             Ball b = balls.get(i);
@@ -458,6 +466,7 @@ public class Panel extends JPanel {
         }
     }
 
+    // Controls the displaying of effect sprites like explosions and fire
     public void effectTimer() {
         for(int i = 0; i < effects.size(); i++) {
             Effect e = effects.get(i);
@@ -468,6 +477,7 @@ public class Panel extends JPanel {
         }
     }
 
+    // Handles all powerup actions, from movement to collection
     public void powerupControls() {
         for(int i = 0; i < powerups.size(); i++) {
             Powerup p = powerups.get(i);
@@ -484,6 +494,7 @@ public class Panel extends JPanel {
         }
     }
 
+    // Handles the spreading of fire: randomly selects an adjacent block that the fire can spread to
     public void spreadFire() {
         for(int r = 0; r < board.length; r++) {
             for(int c = 0; c < board[r].length; c++) {
@@ -525,6 +536,7 @@ public class Panel extends JPanel {
         }
     }
 
+    // Draws the level inside the panel
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D)g;

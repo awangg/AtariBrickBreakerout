@@ -20,13 +20,15 @@ public class Powerup {
         speed += 1;
     }
 
+    // Checks if the powerup hits the paddle
     public boolean isCollected(Paddle p) {
-        if(y + h + speed >= p.getPosition().y && y + h + speed <= p.getPosition().y + p.getHeight() && x + w >= p.getPosition().x && x <= p.getPosition().x + p.getWidth()) {
+        if(y + h >= p.getPosition().y && y + h <= p.getPosition().y + p.getHeight() && x + w >= p.getPosition().x && x <= p.getPosition().x + p.getWidth()) {
             return true;
         }
         return false;
     }
 
+    // Runs whenever the powerup is collected; different for every powerup
     public void action() {
     }
 

@@ -63,6 +63,7 @@ public class Ball {
         setPoints();
     }
 
+    // Sets the eight detection points on the circle; each point is 45 degrees apart starting from 0 degrees
     public void setPoints() {
         double[] deltaX = new double[8];
         double[] deltaY = new double[8];
@@ -77,6 +78,8 @@ public class Ball {
         }
     }
 
+    // handles collisions with all entities (blocks and player)
+    // if one of the points is inside the rectangle, depending on the position of the center relative to the rectangle, the ball will bounce accordingly
     public boolean collide(Rectangle rect) {
         boolean collided = false;
         for(Point p : points) {

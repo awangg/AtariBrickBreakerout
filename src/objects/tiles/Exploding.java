@@ -12,6 +12,7 @@ public class Exploding extends Block {
         setExploding(true);
     }
 
+    // Returns new 2D block array that has destroyed blocks around it
     public Block[][] explode(Block[][] original) {
         int row = getCoordinates().x;
         int col = getCoordinates().y;
